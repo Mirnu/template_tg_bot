@@ -1,10 +1,12 @@
 import 'reflect-metadata';
 import { Telegraf } from 'telegraf';
 import dotenv from 'dotenv';
-import { ROUTES_KEY } from './metadata/metadata-keys';
+import { ROUTES_KEY } from './core/metadata/metadata-keys';
 import { loadControllers } from './core/load-controllers';
 import path from 'path';
 import { registerControllers } from './core/register-controllers';
+import loadClasses from './core/load-classes';
+import { DIContainer } from './core/DIContainer';
 
 dotenv.config();
 
@@ -17,9 +19,20 @@ if (!BOT_TOKEN) {
 const bot = new Telegraf(BOT_TOKEN);
 
 (async () => {
-  const controllersDir = path.resolve(__dirname, 'controllers');
-  const controllers = await loadControllers(controllersDir);
-  registerControllers(bot, controllers);
+    const classesDir = path.join(__dirname, 'classes');
+    const controllersDir = path.join(__dirname, 'classes/controllers');
+
+    const classesMap = await loadClasses(classesDir);
+
+    const container = new DIContainer(classesMap);
+
+    const controllers = await loadControllers(controllersDir);
+
+    const myControllerInstance = controllers.map((controller) => container.resolve(controller));
+
+    // Передаём в регистратор контроллеров уже созданный экземпляр, либо так же для всех
+    registerControllers(bot, myControllerInstance);
 })();
+
 
 bot.launch().then(() => console.log('Бот started'));

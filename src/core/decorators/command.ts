@@ -1,4 +1,4 @@
-import { ROUTES_KEY } from "./metadata-keys";
+import { ROUTES_KEY } from "../metadata/metadata-keys";
 
 export function Command(command: string) {
   return (target: any, propertyKey: string) => {

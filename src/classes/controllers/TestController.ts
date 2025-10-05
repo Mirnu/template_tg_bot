@@ -1,8 +1,14 @@
-import { Command } from "../metadata/command";
+import { Command } from "../../core/decorators/command";
+import Injectable from "../../core/decorators/Injectable";
+import TestUtil from "../Utils/TestUtil";
 
+@Injectable()
 export class TestController {
+  public constructor(private TestUtil: TestUtil) {}
+
   @Command('start')
   startCommand(ctx: any) {
+    this.TestUtil.Log();
     ctx.reply('Привет! Это стартовая команда.');
   }
 
