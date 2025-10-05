@@ -14,9 +14,18 @@ async function loadClasses(dir: string, map = new Map<string, any>()): Promise<M
       // Предполагается default экспорт класса
       if (module.default) {
         map.set(module.default.name, module.default);
+      } else {
+        // Нет default, ищем первый именованный экспорт класса
+        const exportedClass = Object.values(module).find(
+          exported => typeof exported === 'function'
+        );
+        if (exportedClass) {
+          map.set(exportedClass.name, exportedClass);
+        }
       }
     }
   }
+
   return map;
 }
 
