@@ -1,6 +1,6 @@
-import { Command } from "../../core/decorators/command";
-import Injectable from "../../core/decorators/Injectable";
-import TestUtil from "../Utils/TestUtil";
+import { Command } from "@/core/decorators/command";
+import Injectable from "@/core/decorators/Injectable";
+import TestUtil from "../utils/TestUtil";
 
 @Injectable()
 export class TestController {

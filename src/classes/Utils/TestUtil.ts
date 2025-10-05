@@ -1,4 +1,4 @@
-import Injectable from "../../core/decorators/Injectable";
+import Injectable from "@/core/decorators/Injectable";
 
 @Injectable()
 export default class TestUtil {

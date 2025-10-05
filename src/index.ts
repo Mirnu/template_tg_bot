@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { Telegraf } from 'telegraf';
 import dotenv from 'dotenv';
-import { ROUTES_KEY } from './core/metadata/metadata-keys';
 import { loadControllers } from './core/load-controllers';
 import path from 'path';
 import { registerControllers } from './core/register-controllers';
